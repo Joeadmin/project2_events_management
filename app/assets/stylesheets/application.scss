@@ -1,0 +1,63 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ 
+ */
+@import "tags";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	/* background-color: #CEECF5; */
+}
+
+.container {
+	
+}
+
+
+.dd {
+	background-color: red;
+	height: 20px;
+	margin-left: 15px;
+}
+
+div#signupbar {
+  height: 30px;
+  color: blue;
+  font-weight: bold;
+  margin-bottom: 10px;
+  
+}
+
+footer.footer {
+  background-color: #BDBDBD;
+  height: 150px;
+  margin-top: 10px;
+}
+.social-media {
+  list-style-type: none;
+}
+
+.social-media li {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.follow-us-text, .social-media {
+	float: left;
+}
+.together {
+	margin-top: 10px;
+}

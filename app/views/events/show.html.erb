@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-lg-8">
+    <p>
+      <h2><strong>Title:</strong>
+      <%= @event.title %></h2>
+    </p>
+
+    <p>
+      <strong>Start date:</strong>  
+      <%= l @event.start_date, :format => :date_format  %>
+    </p>
+
+    <p>
+      <strong>End date:</strong>
+      <%= l @event.end_date, :format => :date_format  %>
+    </p>
+
+    <p>
+      <strong>Location:</strong>
+      <%= @event.location %>
+    </p>
+
+    <p>
+      <strong>Agenda:</strong>
+      <%= @event.agenda %>
+    </p>
+
+    <p>
+      <strong>Address:</strong>
+      <%= @event.address %>
+    </p>
+
+    <p>
+      <strong>Organizer:</strong>
+      <%= @event.organizer.email %>
+    </p>
+    <p>
+      <%= image_tag @event.organizer.image.url(:medium) %>
+    </p>
+
+    <b>Tags:</b>
+    <div class="tags">
+      <%= raw @event.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %>
+    </div>
+
+    <%= link_to 'Edit', edit_event_path(@event), :class => "btn btn-primary" %> 
+    <%= link_to 'Back', events_path, :class => "btn btn-primary" %>
+
+    <hr>
+    <!--%= raw @event.tags.map(&:name).map { |t| t }.join(', ') %-->
+    <%= link_to "Join the Event", event_join_path(:event_id => @event.id), :class => "btn btn-success btn-small" %>
+
+    <hr>
+    <% if user_signed_in? && current_user.id == @event.organizer_id %>
+      <label>Requests Pending...</label>
+      <% if Event.pending_requests(@event.id).present? %>
+        <table class="table table-striped">
+         <% Event.pending_requests(@event.id).each do |p| %>
+         <tr>
+           <td>
+             <%= p.user.email %>
+           </td>
+           <td>
+             <%= link_to "Accept", event_accept_request_path(:id => @event.id, :event_id => @event.id, 
+               :attendance_id => p.id), :class => "btn btn-success btn-small" %>
+           </td>
+           <td>
+             <%= link_to "Reject", event_reject_request_path(:id => @event.id, :event_id => @event.id, 
+               :attendance_id => p.id), :class => "btn btn-danger btn-small" %>
+           </td>
+         </tr>      
+        <% end %>
+
+        </table>    
+      <% else %>
+        <p>No pending requests</p>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-lg-4">
+    <label>Attendees:</label>
+    <% if @attendees.present? %>
+      <table class="table table-hover">
+        <% @attendees.each do |a| %>
+        <tr>
+          <td>
+            <%= image_tag a.user.image.url(:thumb) %>
+          </td> 
+          <td>
+             <%= a.user.username %>
+          </td>     
+        </tr> 
+        <% end %> 
+      </table>
+    <% else %>
+      <p>No attendees yet</p>
+    <% end %>
+</div>
+  
+ 

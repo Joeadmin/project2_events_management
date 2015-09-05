@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-lg-8">
+    <h3>Recently Created Personal Events</h3>
+    <% if @events.present? %>
+      <% @events.each do |event| %>
+        <h3><%= event.title %></h3>
+        <label>Start Date: </label><%= l event.start_date, :format => :date_format %>
+        <label>End Date: </label><%= l event.end_date, :format => :date_format %><br>
+        <label>Location: </label><%= event.location %><br>
+        <label>Address: </label>
+        <address>
+          <%= event.address%><br>
+        </address>
+        <label>Agenda: </label>
+        <%= event.agenda %><br>
+        <label>Organized By: </label><br>
+        <%= event.organizer.username %><br>
+        <%= image_tag event.organizer.image.url(:thumb) %><br><br>
+        
+        <label>Tags: </label><br>
+        <%= raw event.tags.map(&:name).map { |t| link_to t, tag_path(t)  }.join(", ")  %> <br>        
+        
+        <%= link_to 'Show Detail', event, :class => "btn btn-info btn-small" %>
+        <% if user_signed_in? && event.organizer_id == current_user.id  %>
+          <%= link_to 'Edit', edit_event_path(event), :class => "btn btn-primary btn-small" %>
+          <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-small" %>  
+        <% end %>
+      <% end %>      
+    <% else %>
+      <p>No Persoanl Events created yet!</p>
+    <% end %>
+    <br>
+    <%= link_to 'Create an Event', new_event_path, :class=>"btn btn-default btn-primary" %>
+  </div>
+
+   <div class="col-lg-4">
+
+  </div>
+
+</div>
+
+<%= will_paginate @events, renderer: BootstrapPagination::Rails %>

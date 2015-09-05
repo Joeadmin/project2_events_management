@@ -1,0 +1,40 @@
+<%= link_to 'New Event', new_event_path, :class => "btn btn-primary" %>
+
+<div class="page-header">
+<h1>Recently Created Events</h1>
+</div>
+
+<div class="events">
+  <% @events.each do |event| %>
+    <div class="event">
+      <h2> <%= event.title %> </h2>  
+        <strong>Start Date: </strong><%= l event.start_date, :format => :date_format %><br>     
+        <strong>End Date: </strong><%= l event.end_date, :format => :date_format %><br>
+        <strong>Location: </strong><%= event.location %><br>
+        <strong>Address: </strong><%= event.address %><br>
+        <strong>Organized By: </strong><%= event.organizer.username%><br>
+        <%= image_tag event.organizer.image.url(:thumb) %> <br>
+        <p>
+          <b>Tags: </b><br>
+          <%= raw event.tags.map(&:name).map { |t| link_to t, tag_path(t)  }.join(", ")  %>         
+        </p>
+        <%= link_to 'Show Detail', event, :class => "btn btn-primary" %>
+        <%= link_to 'Edit', edit_event_path(event), :class => "btn btn-info" %>
+        <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
+    </div> 
+     <hr>
+     <!--h4>Display tags:</h4-->
+     <!--%= event.all_tags %-->
+  <% end %>
+
+ 
+</div>
+<%= will_paginate @events, renderer: BootstrapPagination::Rails %>
+
+
+
+
+
+
+
+
